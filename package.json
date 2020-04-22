@@ -1,6 +1,6 @@
 {
   "name": "typescript-esm",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Tooling to enable interoperability between TypeScript and mjs for Node.js.",
   "main": "./dist/format.js",
   "module": "./dist/format.mjs",
