@@ -1,0 +1,22 @@
+{
+  "name": "typescript-esm",
+  "version": "0.0.1",
+  "description": "Tooling to enable interoperability between TypeScript and mjs for Node.js.",
+  "main": "src/index.mjs",
+  "module": "src/index.mjs",
+  "author": "Kristofer Baxter",
+  "license": "MIT",
+  "dependencies": {
+    "@kristoferbaxter/estree-walker": "2.0.2",
+    "acorn": "7.1.1",
+    "acorn-import-meta": "1.1.0",
+    "magic-string": "0.25.7"
+  },
+  "volta": {
+    "node": "14.0.0",
+    "yarn": "1.22.4"
+  },
+  "engines": {
+    "node": ">=14"
+  }
+}
