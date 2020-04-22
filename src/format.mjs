@@ -20,15 +20,17 @@ async function convertRelativeImportPaths(dirname, filePath) {
       if (node.type === 'ImportDeclaration' || node.type === 'ExportNamedDeclaration') {
         const { source } = node;
 
-        if (source.value.startsWith('.')) {
-          // The first character of the module source is a dot, indicating this could be a path.
-          const basePath = path.join(dirname, source.value);
-          if (await pathExists([basePath + '.js', basePath + '.mjs'])) {
-            // There is a existing filesystem entry for either an '.mjs' or '.js' version of the import.
-            // It is safe to use the '.mjs' extension for this import.
-            const [start, end] = source.range;
-            magicString.overwrite(start, end, `'${path.resolve(basePath)}.mjs'`);
-          }
+        if (source === null || !source.value.startsWith('.')) {
+          return;
+        }
+
+        // The first character of the module source is a dot, indicating this could be a path.
+        const basePath = path.join(dirname, source.value);
+        if (await pathExists([basePath + '.js', basePath + '.mjs'])) {
+          // There is a existing filesystem entry for either an '.mjs' or '.js' version of the import.
+          // It is safe to use the '.mjs' extension for this import.
+          const [start, end] = source.range;
+          magicString.overwrite(start, end, `'${path.resolve(basePath)}.mjs'`);
         }
       }
     },
