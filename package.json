@@ -2,15 +2,35 @@
   "name": "typescript-esm",
   "version": "0.0.1",
   "description": "Tooling to enable interoperability between TypeScript and mjs for Node.js.",
-  "main": "src/index.mjs",
-  "module": "src/index.mjs",
+  "main": "./dist/format.js",
+  "module": "./dist/format.mjs",
   "author": "Kristofer Baxter",
   "license": "MIT",
+  "files": [
+    "dist"
+  ],
+  "bin": {
+    "tsc-esm": "./dist/tsc-esm"
+  },
+  "scripts": {
+    "clean": "rimraf dist/*",
+    "try": "./dist/tsc-esm",
+    "build": "yarn clean; rollup -c; chmod a+x ./dist/tsc-esm",
+    "prepublishOnly": "yarn build"
+  },
   "dependencies": {
     "@kristoferbaxter/estree-walker": "2.0.2",
     "acorn": "7.1.1",
     "acorn-import-meta": "1.1.0",
-    "magic-string": "0.25.7"
+    "fast-glob": "3.2.2",
+    "magic-string": "0.25.7",
+    "mri": "1.1.5"
+  },
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "11.1.0",
+    "@rollup/plugin-node-resolve": "7.1.3",
+    "rimraf": "3.0.2",
+    "rollup": "2.7.1"
   },
   "volta": {
     "node": "14.0.0",
@@ -18,5 +38,8 @@
   },
   "engines": {
     "node": ">=14"
+  },
+  "exports": {
+    ".": "./dist/format.mjs"
   }
 }

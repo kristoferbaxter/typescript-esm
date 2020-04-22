@@ -1,5 +1,5 @@
 import { promises as fs } from 'fs';
-import acorn from 'acorn';
+import * as acorn from 'acorn';
 import importMeta from 'acorn-import-meta';
 import MagicString from 'magic-string';
 import { log } from './log.mjs';

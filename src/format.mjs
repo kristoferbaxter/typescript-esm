@@ -6,7 +6,7 @@ import { parse } from './parse.mjs';
 import { log } from './log.mjs';
 import { pathExists } from './paths.mjs';
 
-export async function test(base) {
+export async function format(base) {
   const filePaths = await glob(base + '/**/*.js');
 
   log('prepare filePaths', { filePaths });
