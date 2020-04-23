@@ -21,6 +21,6 @@ jobs:
         commit_author_email: kristofer@kristoferbaxter.com
         commit_author_name: Kristofer Baxter
         commit_message: Apply formatting changes
-        ref: ${{ github.head_ref }}
+        branch: ${{ github.head_ref }}
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
