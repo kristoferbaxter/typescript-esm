@@ -1,4 +1,5 @@
 import { promises as fs } from 'fs';
+import allSettled from "promise.allsettled";
 import { log } from './log.mjs';
 
 /**
@@ -8,7 +9,7 @@ import { log } from './log.mjs';
  */
 export async function pathExists(paths) {
   try {
-    await Promise.allSettled(paths.map((path) => fs.access(path)));
+    await allSettled(paths.map((path) => fs.access(path)));
   } catch (e) {
     log('Paths Exist: Error', e);
   }
