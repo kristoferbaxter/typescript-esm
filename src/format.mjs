@@ -7,9 +7,9 @@ import { log } from './log.mjs';
 import { pathExists } from './paths.mjs';
 
 /**
- * 
+ *
  * @param {string} dirname
- * @param {string} filePath 
+ * @param {string} filePath
  * @return {Promise<string>}
  */
 async function convertRelativeImportPaths(dirname, filePath) {
@@ -42,8 +42,8 @@ async function convertRelativeImportPaths(dirname, filePath) {
 /**
  * Format each js file output by TypeScript
  * 1. With an `.mjs` extension.
- * 2. With each relative import location including an `.mjs` extension 
- * @param {string} base 
+ * 2. With each relative import location including an `.mjs` extension
+ * @param {string} base
  * @return {Promise<Set<string>>}
  */
 export async function format(base) {

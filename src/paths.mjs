@@ -1,5 +1,5 @@
 import { promises as fs } from 'fs';
-import allSettled from "promise.allsettled";
+import allSettled from 'promise.allsettled';
 import { log } from './log.mjs';
 
 /**
