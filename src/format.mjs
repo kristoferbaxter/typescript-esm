@@ -7,7 +7,7 @@ import { log } from './log.mjs';
 import { pathExists } from './paths.mjs';
 
 /**
- *
+ * convert `import from './foo'` or `export from './foo'` specifiers to include mjs extensions.
  * @param {string} dirname
  * @param {string} filePath
  * @return {Promise<string>}
