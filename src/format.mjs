@@ -7,7 +7,7 @@ import { log } from './log.mjs';
 import { pathExists } from './paths.mjs';
 
 /**
- *
+ * convert `import from './foo'` or `export from './foo'` specifiers to include mjs extensions.
  * @param {string} dirname
  * @param {string} filePath
  * @return {Promise<string>}
@@ -15,7 +15,7 @@ import { pathExists } from './paths.mjs';
 async function convertRelativeImportPaths(dirname, filePath) {
   const [program, magicString] = await parse(filePath);
 
-  await walk(program, {
+  await walk(program,{
     enter: async function (node) {
       if (node.type === 'ImportDeclaration' || node.type === 'ExportNamedDeclaration') {
         const { source } = node;
