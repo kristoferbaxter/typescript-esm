@@ -15,7 +15,7 @@ import { pathExists } from './paths.mjs';
 async function convertRelativeImportPaths(dirname, filePath) {
   const [program, magicString] = await parse(filePath);
 
-  await walk(program,{
+  await walk(program, {
     enter: async function (node) {
       if (node.type === 'ImportDeclaration' || node.type === 'ExportNamedDeclaration') {
         const { source } = node;
