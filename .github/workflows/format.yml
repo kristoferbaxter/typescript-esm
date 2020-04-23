@@ -18,5 +18,9 @@ jobs:
     - name: Commit
       uses: stefanzweifel/git-auto-commit-action@v4.1.2
       with:
+        commit_author_email: kristofer@kristoferbaxter.com
+        commit_author_name: Kristofer Baxter
         commit_message: Apply formatting changes
-        branch: ${{ github.head_ref }}
+        ref: ${{ github.head_ref }}
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
