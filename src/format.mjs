@@ -8,9 +8,9 @@ import { pathExists } from './paths.mjs';
 
 /**
  * Update a path with a new extension.
- * @param {string} originalPath 
- * @param {string} newExtension 
- * @return {string} updated path with new extension 
+ * @param {string} originalPath
+ * @param {string} newExtension
+ * @return {string} updated path with new extension
  */
 function repath(originalPath, newExtension) {
   return path.join(path.dirname(originalPath), path.basename(originalPath, path.extname(originalPath)) + newExtension);
