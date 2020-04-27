@@ -7,7 +7,7 @@ const args = mri(process.argv.slice(2), {
 });
 
 (async function () {
-  if (args.path === undefined) {
+  if (args.project === undefined) {
     console.log('You must specify a project either via --project or -p');
     return;
   }
