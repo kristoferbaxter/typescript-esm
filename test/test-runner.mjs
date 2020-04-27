@@ -2,11 +2,16 @@ import glob from 'fast-glob';
 import * as path from 'path';
 import { fileURLToPath } from 'url';
 import { stdout, exit } from 'process';
+import prettier from 'prettier';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 (async function () {
   const files = await glob(__dirname + '/**/*.test.mjs');
+  const prettierOptions = await prettier.resolveConfig(await prettier.resolveConfigFile());
+  const testContext = {
+    format: (content) => prettier.format(content, prettierOptions),
+  };
   let failure = false;
 
   if (files.length > 0) {
@@ -19,9 +24,9 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
         stdout.write(`.. ${name}`);
         try {
           if (pre) {
-            await pre();
+            await pre(testContext);
           }
-          await test();
+          await test(testContext);
         } catch (err) {
           stdout.write(` - FAILURE\nErr: ${err}`);
           failure = true;

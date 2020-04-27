@@ -13,5 +13,5 @@ const args = mri(process.argv.slice(2), {
   }
 
   const configuration = config(args.project);
-  await format(configuration);
+  await format(args.project, configuration);
 })();
