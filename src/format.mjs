@@ -1,10 +1,13 @@
 import * as path from 'path';
 import { promises as fs } from 'fs';
+import { fileURLToPath } from 'url';
 import glob from 'fast-glob';
 import { asyncWalk as walk } from '@kristoferbaxter/estree-walker';
 import { parse } from './parse.mjs';
 import { log } from './log.mjs';
 import { pathExists } from './paths.mjs';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 /**
  * convert `import from './foo'` or `export from './foo'` specifiers to include mjs extensions.
@@ -43,19 +46,20 @@ async function convertRelativeImportPaths(dirname, filePath) {
  * Format each js file output by TypeScript
  * 1. With an `.mjs` extension.
  * 2. With each relative import location including an `.mjs` extension
- * @param {string} base
+ * @param {Object} config
  * @return {Promise<Set<string>>}
  */
-export async function format(base) {
-  const filePaths = await glob(base + '/**/*.js');
+export async function format(config) {
+  const basePath = path.resolve(__dirname, config.compilerOptions.outDir);
+  const filePaths = await glob(basePath + '/**/*.js');
   const newFilePaths = new Set();
 
   log('prepare filePaths', { filePaths });
   for (const filePath of filePaths) {
     try {
-      const __dirname = path.dirname(filePath);
-      const newFilePath = path.join(__dirname, path.basename(filePath, path.extname(filePath)) + '.mjs');
-      const newFileContent = await convertRelativeImportPaths(__dirname, filePath);
+      const fileDirName = path.dirname(filePath);
+      const newFilePath = path.join(fileDirName, path.basename(filePath, path.extname(filePath)) + '.mjs');
+      const newFileContent = await convertRelativeImportPaths(fileDirName, filePath);
 
       newFilePaths.add(newFilePath);
       await fs.writeFile(newFilePath, newFileContent);

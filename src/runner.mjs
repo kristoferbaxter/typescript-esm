@@ -1,15 +1,17 @@
 import mri from 'mri';
+import { config } from './config.mjs';
 import { format } from './format.mjs';
 
 const args = mri(process.argv.slice(2), {
-  alias: { p: 'path' },
+  alias: { p: 'project' },
 });
 
 (async function () {
   if (args.path === undefined) {
-    console.log('You must specify a path either via --path or -p');
+    console.log('You must specify a project either via --project or -p');
     return;
   }
 
-  await format(args.path);
+  const configuration = config(args.project);
+  await format(configuration);
 })();

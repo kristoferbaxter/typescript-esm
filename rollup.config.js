@@ -17,7 +17,7 @@
 import resolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
 
-const external = ['path', 'fs', 'fast-glob', 'util'];
+const external = ['path', 'fs', 'fast-glob', 'util', 'process', 'typescript'];
 const plugins = [
   resolve({ preferBuiltins: true }),
   commonjs({ include: 'node_modules/**' }),
