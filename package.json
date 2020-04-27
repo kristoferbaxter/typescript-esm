@@ -13,7 +13,7 @@
     "tsc-esm": "./dist/tsc-esm"
   },
   "scripts": {
-    "clean": "rimraf dist/* test/**/output/*",
+    "clean": "rimraf dist/* test/*/output/",
     "format": "prettier --write '**/*.mjs'",
     "try": "./dist/tsc-esm",
     "build": "yarn clean; rollup -c; chmod a+x ./dist/tsc-esm",
