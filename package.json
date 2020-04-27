@@ -17,6 +17,7 @@
     "format": "prettier --write '**/*.mjs'",
     "try": "./dist/tsc-esm",
     "build": "yarn clean; rollup -c; chmod a+x ./dist/tsc-esm",
+    "test": "node --experimental-modules test/test-runner.mjs",
     "prepublishOnly": "yarn build"
   },
   "dependencies": {
