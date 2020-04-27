@@ -1,5 +1,5 @@
 import { promises as fs } from 'fs';
-import * as acorn from 'acorn';
+import acorn from 'acorn';
 import importMeta from 'acorn-import-meta';
 import MagicString from 'magic-string';
 import { log } from './log.mjs';
@@ -19,7 +19,7 @@ const DEFAULT_ACORN_OPTIONS = {
 export async function parse(filePath) {
   try {
     const contents = await fs.readFile(filePath, 'utf8');
-    const parse = acorn.default.Parser.extend(importMeta).parse(contents, DEFAULT_ACORN_OPTIONS);
+    const parse = acorn.Parser.extend(importMeta).parse(contents, DEFAULT_ACORN_OPTIONS);
     const magic = new MagicString(contents);
     return [parse, magic];
   } catch (e) {
