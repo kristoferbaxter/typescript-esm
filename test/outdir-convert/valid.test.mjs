@@ -5,7 +5,7 @@ import { config } from '../../src/config.mjs';
 import { format } from '../../src/format.mjs';
 import { spawn } from '../promise-spawn.mjs';
 
-export const pre = async() => await spawn('./node_modules/typescript/bin/tsc', ['-p', 'test/outdir-convert/tsconfig.json']);
+export const pre = async () => await spawn('./node_modules/typescript/bin/tsc', ['-p', 'test/outdir-convert/tsconfig.json']);
 
 export const tests = new Map([
   [
@@ -29,6 +29,6 @@ export const tests = new Map([
         const fixtureFileSystem = await fs.readFile(resolve('test/outdir-convert/fixtures', basename(formattedEntry)), 'utf8');
         assert.deepEqual(testContext.format(formattedFileSystem), testContext.format(fixtureFileSystem));
       }
-    }
-  ]
+    },
+  ],
 ]);
