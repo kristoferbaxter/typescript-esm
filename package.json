@@ -17,7 +17,8 @@
     "format": "prettier --write '**/*.mjs'",
     "try": "./dist/tsc-esm",
     "build": "yarn clean; rollup -c; chmod a+x ./dist/tsc-esm",
-    "test": "node --experimental-modules test/test-runner.mjs",
+    "test": "yarn tap test/**/*.test.mjs",
+    "tap": "c8 tap --no-coverage --no-esm --node-arg=--experimental-modules",
     "prepublishOnly": "yarn build"
   },
   "dependencies": {
@@ -33,10 +34,12 @@
   "devDependencies": {
     "@rollup/plugin-commonjs": "11.1.0",
     "@rollup/plugin-node-resolve": "7.1.3",
+    "c8": "7.1.0",
     "json5": "2.1.3",
     "prettier": "2.0.5",
     "rimraf": "3.0.2",
-    "rollup": "2.7.1"
+    "rollup": "2.7.1",
+    "tap": "14.10.7"
   },
   "volta": {
     "node": "14.0.0",
