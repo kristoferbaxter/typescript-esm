@@ -15,7 +15,7 @@ When you add the `tsc-esm` compiler following the conclusion of TypeScript's out
 ### Example
 **direct.ts** in a TypeScript Project.
 
-**Before**
+**Before** direct.js
 ```
 import {imported} from './imported';
 
@@ -28,7 +28,7 @@ export default function() {
 }
 ```
 
-**After**
+**After** direct.mjs
 ```
 import { imported } from './imported.mjs';
 export default function () {
