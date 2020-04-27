@@ -7,6 +7,16 @@ import { log } from './log.mjs';
 import { pathExists } from './paths.mjs';
 
 /**
+ * Update a path with a new extension.
+ * @param {string} originalPath
+ * @param {string} newExtension
+ * @return {string} updated path with new extension
+ */
+function repath(originalPath, newExtension) {
+  return path.join(path.dirname(originalPath), path.basename(originalPath, path.extname(originalPath)) + newExtension);
+}
+
+/**
  * convert `import from './foo'` or `export from './foo'` specifiers to include mjs extensions.
  * @param {string} dirname
  * @param {string} filePath
@@ -30,7 +40,7 @@ async function convertRelativeImportPaths(dirname, filePath) {
           // There is a existing filesystem entry for either an '.mjs' or '.js' version of the import.
           // It is safe to use the '.mjs' extension for this import.
           const [start, end] = source.range;
-          magicString.overwrite(start, end, `'${path.resolve(basePath)}.mjs'`);
+          magicString.overwrite(start, end, `'./${repath(source.value, '.mjs')}'`);
         }
       }
     },
@@ -43,19 +53,21 @@ async function convertRelativeImportPaths(dirname, filePath) {
  * Format each js file output by TypeScript
  * 1. With an `.mjs` extension.
  * 2. With each relative import location including an `.mjs` extension
- * @param {string} base
+ * @param {string} configFileLocation
+ * @param {Object} config
  * @return {Promise<Set<string>>}
  */
-export async function format(base) {
-  const filePaths = await glob(base + '/**/*.js');
+export async function format(configFileLocation, config) {
+  const basePath = path.resolve(path.dirname(configFileLocation), config.compilerOptions.outDir);
+  const filePaths = await glob(basePath + '/**/*.js');
   const newFilePaths = new Set();
 
-  log('prepare filePaths', { filePaths });
+  log('prepare filePaths', { basePath, filePaths });
   for (const filePath of filePaths) {
     try {
-      const __dirname = path.dirname(filePath);
-      const newFilePath = path.join(__dirname, path.basename(filePath, path.extname(filePath)) + '.mjs');
-      const newFileContent = await convertRelativeImportPaths(__dirname, filePath);
+      const newFilePath = repath(filePath, '.mjs');
+      const fileDirName = path.dirname(filePath);
+      const newFileContent = await convertRelativeImportPaths(fileDirName, filePath);
 
       newFilePaths.add(newFilePath);
       await fs.writeFile(newFilePath, newFileContent);

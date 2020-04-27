@@ -1,6 +1,6 @@
 {
   "name": "typescript-esm",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Tooling to enable interoperability between TypeScript and mjs for Node.js.",
   "main": "./dist/format.js",
   "module": "./dist/format.mjs",
@@ -13,10 +13,11 @@
     "tsc-esm": "./dist/tsc-esm"
   },
   "scripts": {
-    "clean": "rimraf dist/*",
+    "clean": "rimraf dist/* test/*/output/",
     "format": "prettier --write '**/*.mjs'",
     "try": "./dist/tsc-esm",
     "build": "yarn clean; rollup -c; chmod a+x ./dist/tsc-esm",
+    "test": "node --experimental-modules test/test-runner.mjs",
     "prepublishOnly": "yarn build"
   },
   "dependencies": {
@@ -26,11 +27,13 @@
     "fast-glob": "3.2.2",
     "magic-string": "0.25.7",
     "mri": "1.1.5",
-    "promise.allsettled": "1.0.2"
+    "promise.allsettled": "1.0.2",
+    "typescript": "3.8.3"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "11.1.0",
     "@rollup/plugin-node-resolve": "7.1.3",
+    "json5": "2.1.3",
     "prettier": "2.0.5",
     "rimraf": "3.0.2",
     "rollup": "2.7.1"
