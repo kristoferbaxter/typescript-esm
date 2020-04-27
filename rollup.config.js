@@ -15,24 +15,20 @@
  */
 
 import * as path from 'path';
-import {promises as fs} from 'fs';
+import { promises as fs } from 'fs';
 import resolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
 
 const external = ['path', 'url', 'fs', 'fast-glob', 'util', 'process', 'typescript'];
-const plugins = [
-  tempFixRollupResolution(),
-  resolve(),
-  commonjs({ include: 'node_modules/**' }),
-];
+const plugins = [tempFixRollupResolution(), resolve(), commonjs({ include: 'node_modules/**' })];
 
 /**
  * This method will override the contents of 'parse.mjs' due to to an incompatibility
  * between rollup's node resolution implementation and Node's native one when running
  * in module mode.
- * 
+ *
  * This code should expire (be deleted) by August 1st 2020.
- * 
+ *
  * @expires {utc} 1596240000
  */
 function tempFixRollupResolution() {
@@ -44,8 +40,8 @@ function tempFixRollupResolution() {
 
       const parseContent = await fs.readFile(path.resolve('./src/parse.mjs'), 'utf8');
       return parseContent.replace("import acorn from 'acorn';", "import * as acorn from 'acorn';");
-    }
-  }
+    },
+  };
 }
 
 export default [
@@ -60,18 +56,18 @@ export default [
     plugins,
   },
   {
-    input: 'src/format.mjs',
+    input: 'src/index.mjs',
     output: {
-      file: 'dist/format.mjs',
+      file: 'dist/index.mjs',
       format: 'esm',
     },
     external,
     plugins,
   },
   {
-    input: 'src/format.mjs',
+    input: 'src/index.mjs',
     output: {
-      file: 'dist/format.js',
+      file: 'dist/index.js',
       format: 'cjs',
     },
     external,

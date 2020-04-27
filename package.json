@@ -2,8 +2,8 @@
   "name": "typescript-esm",
   "version": "1.0.0",
   "description": "Tooling to enable interoperability between TypeScript and mjs for Node.js.",
-  "main": "./dist/format.js",
-  "module": "./dist/format.mjs",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
   "author": "Kristofer Baxter",
   "license": "MIT",
   "files": [
@@ -52,6 +52,6 @@
     "singleQuote": true
   },
   "exports": {
-    ".": "./dist/format.mjs"
+    ".": "./dist/index.mjs"
   }
 }
