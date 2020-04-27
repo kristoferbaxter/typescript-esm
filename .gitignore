@@ -3,6 +3,8 @@ output/
 test/output/
 .vscode/
 .DS_Store
+.nyc_output
+coverage/
 yarn-error.log
 package-lock.json
 dist/*
