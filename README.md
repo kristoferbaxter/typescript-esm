@@ -14,7 +14,7 @@ This is likely how you're configuring TypeScript to execute if you're looking at
 tsc -p tsconfig.json; tsc-esm -p tsconfig.json
 ```
 
-When you add the `tsc-esm` compiler following the conclusion of TypeScript's output, this compiler will remap all generated files to use '.mjs' extensions for locally resolved items and rename ever output's extension to '.mjs'.
+When you add the `tsc-esm` compiler following the conclusion of TypeScript's output, this compiler will remap all generated files to use '.mjs' extensions for locally resolved items and rename every output's extension to '.mjs'.
 
 ### Example
 **direct.ts** in a TypeScript Project.
