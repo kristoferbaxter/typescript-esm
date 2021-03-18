@@ -41,3 +41,13 @@ export default function () {
   imported();
 }
 ```
+
+### Contribution helps
+
+Select proper node version, using [volta](https://docs.volta.sh/guide/getting-started).
+
+```
+yarn 
+yarn build
+yarn test # always build before test
+```
