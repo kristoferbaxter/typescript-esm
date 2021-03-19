@@ -27,7 +27,7 @@ async function convertRelativeImportPaths(dirname, filePath) {
 
   await walk(program, {
     enter: async function (node) {
-      if (node.type === 'ImportDeclaration' || node.type === 'ExportNamedDeclaration') {
+      if (node.type === 'ImportDeclaration' || node.type === 'ExportNamedDeclaration' || node.type === 'ExportAllDeclaration') {
         const { source } = node;
 
         if (source === null || !source.value.startsWith('.')) {
