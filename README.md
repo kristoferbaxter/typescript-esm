@@ -42,6 +42,5 @@ export default function () {
 }
 ```
 
-### To Contributors:
-
+### For Contributors
 [Volta](https://docs.volta.sh/guide/getting-started) is highly recommended to keep the node version and yarn version synced with other contributors.
