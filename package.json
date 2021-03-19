@@ -1,6 +1,6 @@
 {
   "name": "typescript-esm",
-  "version": "1.0.1",
+  "version": "2.0.0",
   "description": "Tooling to enable interoperability between TypeScript and mjs for Node.js.",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
