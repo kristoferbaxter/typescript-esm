@@ -13,10 +13,8 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    - name: Install Dependencies
-      run: yarn install
     - name: Format
-      run: yarn format
+      run: yarn install; yarn format
     - name: Push changes
       uses: kristoferbaxter/github-push-action@master
       with:
