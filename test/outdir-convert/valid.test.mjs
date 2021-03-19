@@ -9,7 +9,7 @@ import { spawn } from '../promise-spawn.mjs';
 import { formatter } from '../prettier.mjs';
 
 const TSCONFIG_PATH = 'test/outdir-convert/tsconfig.json';
-const test = suite('validConversion');
+const test = suite('valid');
 
 test.before(async () => await spawn('./node_modules/typescript/bin/tsc', ['-p', TSCONFIG_PATH]));
 

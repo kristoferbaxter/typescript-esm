@@ -9,7 +9,7 @@ import { spawn } from '../promise-spawn.mjs';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
-const test = suite('parse');
+const test = suite('config');
 
 test.before(async () => await spawn('./node_modules/typescript/bin/tsc', ['-p', 'test/outdir/tsconfig.json']));
 
