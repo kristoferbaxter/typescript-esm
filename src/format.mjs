@@ -46,7 +46,6 @@ async function convertRelativeImportPaths(dirname, filePath) {
     },
   });
 
-
   return magicString.toString();
 }
 
@@ -70,14 +69,14 @@ export async function format(configFileLocation, config) {
       const newFilePath = repath(filePath, '.mjs');
       const fileDirName = path.dirname(filePath);
       let newFileContent = await convertRelativeImportPaths(fileDirName, filePath);
-      newFileContent = convertSourceMapURL(filePath, newFileContent)
+      newFileContent = convertSourceMapURL(filePath, newFileContent);
 
       newFilePaths.add(newFilePath);
       await fs.writeFile(newFilePath, newFileContent);
       await fs.unlink(filePath);
       if (hasSourceMaps) {
-        const sourceMap = await convertSourceMapFile(filePath + '.map')
-        newFilePaths.add(newFilePath + '.map')
+        const sourceMap = await convertSourceMapFile(filePath + '.map');
+        newFilePaths.add(newFilePath + '.map');
         await fs.writeFile(newFilePath + '.map', sourceMap);
         await fs.unlink(filePath + '.map');
       }
@@ -93,14 +92,14 @@ export async function format(configFileLocation, config) {
 function convertSourceMapURL(filePath, fileContents) {
   const fileNameNoExt = path.basename(filePath, '.js');
   const sourceMapUrlRegexp = new RegExp('//# sourceMappingURL=' + fileNameNoExt + '.js.map');
-  const newSourceMapUrl = '//# sourceMappingURL=' + fileNameNoExt + '.mjs.map'
+  const newSourceMapUrl = '//# sourceMappingURL=' + fileNameNoExt + '.mjs.map';
   return fileContents.replace(sourceMapUrlRegexp, newSourceMapUrl);
 }
 
 async function convertSourceMapFile(filePath) {
-  const fileContents = await fs.readFile(filePath, 'utf8')
-  const json = JSON.parse(fileContents)
-  const newFilePath = json.file.replace(/.js$/, '.mjs')
-  json.file = newFilePath
-  return JSON.stringify(json)
+  const fileContents = await fs.readFile(filePath, 'utf8');
+  const json = JSON.parse(fileContents);
+  const newFilePath = json.file.replace(/.js$/, '.mjs');
+  json.file = newFilePath;
+  return JSON.stringify(json);
 }

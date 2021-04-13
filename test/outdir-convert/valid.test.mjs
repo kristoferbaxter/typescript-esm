@@ -12,42 +12,42 @@ import { formatter } from '../prettier.mjs';
 const TSCONFIG_PATH = 'test/outdir-convert/tsconfig.json';
 const api = suite('valid api');
 
-api.before(async (context) => { 
+api.before(async (context) => {
   await compileTypescript();
   context.formattedFiles = await formatViaApi();
 });
 
 api('renames .js to .mjs files', async (context) => {
-  const mjsFiles = filterBy('.mjs', context.formattedFiles)
+  const mjsFiles = filterBy('.mjs', context.formattedFiles);
   assert.equal(mjsFiles.length, 4, 'renames 4 files');
 });
 
 api('renames .js to .mjs files 2', async (context) => {
-  const mjsFiles = filterBy('.mjs', context.formattedFiles)
+  const mjsFiles = filterBy('.mjs', context.formattedFiles);
   assert.equal(mjsFiles.length, 4, 'renames 4 files');
 });
 
 api('rewrites code import specifiers to .mjs', async (context) => {
   const mjsFiles = filterBy('.mjs', context.formattedFiles);
   assert.equal(mjsFiles.length, 4, 'rewrites 4 files');
-  assertFormattedFilesMatchFixtures(mjsFiles)
+  assertFormattedFilesMatchFixtures(mjsFiles);
 });
 
 api('rewrites sourcemap file pointer to .mjs', async (context) => {
   const mapFiles = filterBy('.map', context.formattedFiles);
   assert.equal(mapFiles.length, 4, 'rewrites 4 files');
-  assertFormattedFilesMatchFixtures(mapFiles, { parser: 'json' })
+  assertFormattedFilesMatchFixtures(mapFiles, { parser: 'json' });
 });
 
 api('generates valid sourcemaps', async (context) => {
-  await assertValidSourceMaps(context.formattedFiles)
+  await assertValidSourceMaps(context.formattedFiles);
 });
 
 api.run();
 
 const cli = suite('valid cli');
 
-cli.before(async (context) => { 
+cli.before(async (context) => {
   await compileTypescript();
   context.formattedFiles = await formatViaApi();
 });
@@ -58,24 +58,24 @@ cli('renames .js to .mjs files', async (context) => {
 });
 
 cli('renames .js.map to .mjs.map files', async (context) => {
-  const mapFiles = filterBy('.map', context.formattedFiles)
+  const mapFiles = filterBy('.map', context.formattedFiles);
   assert.equal(mapFiles.length, 4, 'renames 4 files');
 });
 
 cli('rewrites code import specifiers to .mjs', async (context) => {
-  const mjsFiles = filterBy('.mjs', context.formattedFiles)
+  const mjsFiles = filterBy('.mjs', context.formattedFiles);
   assert.equal(mjsFiles.length, 4, 'rewrites 4 files');
-  await assertFormattedFilesMatchFixtures(mjsFiles)
+  await assertFormattedFilesMatchFixtures(mjsFiles);
 });
 
 cli('rewrites sourcemap file pointer to .mjs', async (context) => {
-  const mapFiles = filterBy('.map', context.formattedFiles)
+  const mapFiles = filterBy('.map', context.formattedFiles);
   assert.equal(mapFiles.length, 4, 'rewrites 4 files');
-  await assertFormattedFilesMatchFixtures(mapFiles, { parser: 'json' })
+  await assertFormattedFilesMatchFixtures(mapFiles, { parser: 'json' });
 });
 
 cli('generates valid sourcemaps', async (context) => {
-  await assertValidSourceMaps(context.formattedFiles)
+  await assertValidSourceMaps(context.formattedFiles);
 });
 
 cli.run();
@@ -87,13 +87,13 @@ async function compileTypescript() {
 async function formatViaApi() {
   const specified = config('test/outdir-convert/tsconfig.json');
   const apiFormatted = await format('test/outdir-convert/tsconfig.json', specified);
-  return apiFormatted
+  return apiFormatted;
 }
 
 async function formatViaCli() {
   await spawn('./dist/tsc-esm', ['-p', 'test/outdir-convert/tsconfig.json']);
   const cliFormatted = await glob('test/outdir-convert/output/**/*.mjs(.map)?');
-  return cliFormatted
+  return cliFormatted;
 }
 
 function filterBy(extension, formatted) {
@@ -109,8 +109,8 @@ async function assertFormattedFilesMatchFixtures(formattedEntries, prettierOptio
 }
 
 async function assertValidSourceMaps(formattedFilePaths) {
-  const mjsFiles = filterBy('.mjs', formattedFilePaths)
-  const mapFiles = filterBy('.map', formattedFilePaths)
+  const mjsFiles = filterBy('.mjs', formattedFilePaths);
+  const mapFiles = filterBy('.map', formattedFilePaths);
   for (const mjsFilePath of mjsFiles) {
     const mjsFile = await fs.readFile(mjsFilePath, 'utf8');
     const sourceMapFilePath = mapFiles.find((m) => m.includes(mjsFilePath));
