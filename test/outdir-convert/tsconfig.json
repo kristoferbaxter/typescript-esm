@@ -6,7 +6,7 @@
     ],
     "outDir": "output",
     "moduleResolution": "node",
-    "target": "ES2019",
+    "target": "esnext",
     "module": "esnext",
     "allowJs": false,
     "noUnusedLocals": true,
