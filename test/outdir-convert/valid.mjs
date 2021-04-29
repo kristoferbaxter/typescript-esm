@@ -14,7 +14,7 @@ async function assertFormattedFilesMatchFixtures(formattedEntries, prettierOptio
   for (const formattedEntry of formattedEntries) {
     const formattedFileSystem = await fs.readFile(formattedEntry, 'utf8');
     const fixtureFileSystem = await fs.readFile(resolve('test/outdir-convert/fixtures', basename(formattedEntry)), 'utf8');
-    assert.equal(formatter(formattedFileSystem, prettierOptions), formatter(fixtureFileSystem, prettierOptions));
+    assert.equal(await formatter(formattedFileSystem, prettierOptions), await formatter(fixtureFileSystem, prettierOptions));
   }
 }
 
