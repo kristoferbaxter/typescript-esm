@@ -17,6 +17,32 @@ function repath(originalPath, newExtension) {
 }
 
 /**
+ * convert sourceMapUrl from '//# sourceMappingURL=foo.js.map' to reference mjs extension.
+ * @param {string} filePath
+ * @param {string} fileContents
+ * @return {string}
+ */
+function convertSourceMapURL(filePath, fileContents) {
+  const fileNameNoExt = path.basename(filePath, '.js');
+  const sourceMapUrlRegexp = new RegExp('//# sourceMappingURL=' + fileNameNoExt + '.js.map');
+  const newSourceMapUrl = '//# sourceMappingURL=' + fileNameNoExt + '.mjs.map';
+  return fileContents.replace(sourceMapUrlRegexp, newSourceMapUrl);
+}
+
+/**
+ * convert sourcemap file to reference mjs extensions.
+ * @param {string} filePath
+ * @return {string}
+ */
+async function convertSourceMapFile(filePath) {
+  const fileContents = await fs.readFile(filePath, 'utf8');
+  const json = JSON.parse(fileContents);
+  const newFilePath = json.file.replace(/.js$/, '.mjs');
+  json.file = newFilePath;
+  return JSON.stringify(json);
+}
+
+/**
  * convert `import from './foo'` or `export from './foo'` specifiers to include mjs extensions.
  * @param {string} dirname
  * @param {string} filePath
@@ -87,19 +113,4 @@ export async function format(configFileLocation, config) {
   }
 
   return newFilePaths;
-}
-
-function convertSourceMapURL(filePath, fileContents) {
-  const fileNameNoExt = path.basename(filePath, '.js');
-  const sourceMapUrlRegexp = new RegExp('//# sourceMappingURL=' + fileNameNoExt + '.js.map');
-  const newSourceMapUrl = '//# sourceMappingURL=' + fileNameNoExt + '.mjs.map';
-  return fileContents.replace(sourceMapUrlRegexp, newSourceMapUrl);
-}
-
-async function convertSourceMapFile(filePath) {
-  const fileContents = await fs.readFile(filePath, 'utf8');
-  const json = JSON.parse(fileContents);
-  const newFilePath = json.file.replace(/.js$/, '.mjs');
-  json.file = newFilePath;
-  return JSON.stringify(json);
 }
