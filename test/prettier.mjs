@@ -1,7 +1,5 @@
 import prettier from 'prettier';
 
-let prettierOptions = undefined;
-
 /**
  * Use Prettier to format content.
  * Cache PrettierOptions in a singleton.
@@ -9,7 +7,7 @@ let prettierOptions = undefined;
  * @param {string} content
  * @return {string}
  */
-export async function formatter(content) {
+export async function formatter(content, prettierOptions) {
   if (prettierOptions === undefined) {
     prettierOptions = await prettier.resolveConfig(await prettier.resolveConfigFile());
   }
