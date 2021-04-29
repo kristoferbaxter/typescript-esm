@@ -2,7 +2,6 @@ import prettier from 'prettier';
 
 /**
  * Use Prettier to format content.
- * Cache PrettierOptions in a singleton.
  *
  * @param {string} content
  * @return {string}
