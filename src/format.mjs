@@ -61,17 +61,25 @@ export async function format(configFileLocation, config) {
   const basePath = path.resolve(path.dirname(configFileLocation), config.compilerOptions.outDir);
   const filePaths = await glob(basePath + '/**/*.js');
   const newFilePaths = new Set();
+  const hasSourceMaps = config.compilerOptions.sourceMap;
 
   log('prepare filePaths', { basePath, filePaths });
   for (const filePath of filePaths) {
     try {
       const newFilePath = repath(filePath, '.mjs');
       const fileDirName = path.dirname(filePath);
-      const newFileContent = await convertRelativeImportPaths(fileDirName, filePath);
+      let newFileContent = await convertRelativeImportPaths(fileDirName, filePath);
+      newFileContent = convertSourceMapURL(filePath, newFileContent);
 
       newFilePaths.add(newFilePath);
       await fs.writeFile(newFilePath, newFileContent);
       await fs.unlink(filePath);
+      if (hasSourceMaps) {
+        const sourceMap = await convertSourceMapFile(filePath + '.map');
+        newFilePaths.add(newFilePath + '.map');
+        await fs.writeFile(newFilePath + '.map', sourceMap);
+        await fs.unlink(filePath + '.map');
+      }
     } catch (e) {
       log(`Overall: Error preparing ${filePath}\n`);
       log(e);
@@ -79,4 +87,19 @@ export async function format(configFileLocation, config) {
   }
 
   return newFilePaths;
+}
+
+function convertSourceMapURL(filePath, fileContents) {
+  const fileNameNoExt = path.basename(filePath, '.js');
+  const sourceMapUrlRegexp = new RegExp('//# sourceMappingURL=' + fileNameNoExt + '.js.map');
+  const newSourceMapUrl = '//# sourceMappingURL=' + fileNameNoExt + '.mjs.map';
+  return fileContents.replace(sourceMapUrlRegexp, newSourceMapUrl);
+}
+
+async function convertSourceMapFile(filePath) {
+  const fileContents = await fs.readFile(filePath, 'utf8');
+  const json = JSON.parse(fileContents);
+  const newFilePath = json.file.replace(/.js$/, '.mjs');
+  json.file = newFilePath;
+  return JSON.stringify(json);
 }

@@ -4,3 +4,4 @@ export default function () {
   console.log(bar);
   imported();
 }
+//# sourceMappingURL=direct.mjs.map
