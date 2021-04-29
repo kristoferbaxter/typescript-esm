@@ -19,7 +19,7 @@ function repath(originalPath, newExtension) {
 /**
  * convert sourceMapUrl from '//# sourceMappingURL=foo.js.map' to reference mjs extension.
  * @param {string} filePath
- * @param {string} fileContents 
+ * @param {string} fileContents
  * @return {string}
  */
 function convertSourceMapURL(filePath, fileContents) {
@@ -29,11 +29,10 @@ function convertSourceMapURL(filePath, fileContents) {
   return fileContents.replace(sourceMapUrlRegexp, newSourceMapUrl);
 }
 
-
 /**
  * convert sourcemap file to reference mjs extensions.
- * @param {string} filePath 
- * @return {string} 
+ * @param {string} filePath
+ * @return {string}
  */
 async function convertSourceMapFile(filePath) {
   const fileContents = await fs.readFile(filePath, 'utf8');
@@ -42,7 +41,6 @@ async function convertSourceMapFile(filePath) {
   json.file = newFilePath;
   return JSON.stringify(json);
 }
-
 
 /**
  * convert `import from './foo'` or `export from './foo'` specifiers to include mjs extensions.
