@@ -25,22 +25,22 @@ export const tests = {
     const jsFiles = await glob('test/outdir-convert/output/**/*.js');
     const mjsFiles = await glob('test/outdir-convert/output/**/*.mjs');
     assert.equal(jsFiles.length, 0, 'no js files remain');
-    assert.equal(mjsFiles.length, 4, 'renames 4 files');
+    assert.equal(mjsFiles.length, 5, 'renames 5 files');
   },
   'renames .js.map to .mjs.map files': async function () {
     const jsMapFiles = await glob('test/outdir-convert/output/**/*.js.map');
     const mjsMapFiles = await glob('test/outdir-convert/output/**/*.mjs.map');
     assert.equal(jsMapFiles.length, 0, 'no js map files remain');
-    assert.equal(mjsMapFiles.length, 4, 'renames 4 files');
+    assert.equal(mjsMapFiles.length, 5, 'renames 5 files');
   },
   'rewrites code import specifiers to .mjs': async function () {
     const mjsFiles = await glob('test/outdir-convert/output/**/*.mjs');
-    assert.equal(mjsFiles.length, 4, 'rewrites 4 files');
+    assert.equal(mjsFiles.length, 5, 'rewrites 5 files');
     await assertFormattedFilesMatchFixtures(mjsFiles);
   },
   'rewrites sourcemap file pointer to .mjs': async function () {
     const mapFiles = await glob('test/outdir-convert/output/**/*.mjs.map');
-    assert.equal(mapFiles.length, 4, 'rewrites 4 files');
+    assert.equal(mapFiles.length, 5, 'rewrites 5 files');
     await assertFormattedFilesMatchFixtures(mapFiles, { parser: 'json' });
   },
   'generates valid sourcemaps': async function () {
