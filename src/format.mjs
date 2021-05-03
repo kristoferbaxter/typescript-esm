@@ -6,6 +6,8 @@ import { parse } from './parse.mjs';
 import { log } from './log.mjs';
 import { pathExists } from './paths.mjs';
 
+const validPathExtensionNames = new Set(['.js', '.mjs']);
+
 /**
  * Update a path with a new extension.
  * @param {string} originalPath
@@ -13,7 +15,9 @@ import { pathExists } from './paths.mjs';
  * @return {string} updated path with new extension
  */
 function repath(originalPath, newExtension) {
-  return path.join(path.dirname(originalPath), path.basename(originalPath, path.extname(originalPath)) + newExtension);
+  const extname = path.extname(originalPath);
+  const basename = path.basename(originalPath, extname) + (!validPathExtensionNames.has(extname) ? extname : '');
+  return path.join(path.dirname(originalPath), basename + newExtension);
 }
 
 /**
